@@ -1,7 +1,9 @@
 
-import { TodosProvider } from "@/store/todos";
+// import { TodosProvider } from "@/store/todos";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { TodosProvider } from "src/store/todos";
+import './globals.css'
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+    <body className={inter.className} >
         <TodosProvider>
         
         {children}

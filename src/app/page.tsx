@@ -1,10 +1,9 @@
-import React from "react";
-import Navbar from "../components/Navbar"; // Adjust the path as necessary
-import Apptodo from "@/components/apptodo";
-import Todos from "@/components/todos";
-import './globals.css'
+import React, { FC } from "react";
+import Navbar from "../components/Navbar";
+import Apptodo from "src/components/apptodo";
+import Todos from "src/components/todos";
 
-const Home = () => {
+const Home:FC = () => {
   return (
     <div>
       

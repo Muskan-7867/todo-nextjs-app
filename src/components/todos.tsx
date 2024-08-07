@@ -1,5 +1,5 @@
 "use client"
-import { usetodos } from '@/store/todos';
+import { usetodos } from 'src/store/todos';
 import { useSearchParams } from 'next/navigation';
 
 const Todos = () => {
