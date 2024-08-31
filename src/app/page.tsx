@@ -9,7 +9,7 @@ const Home:FC = () => {
       
       <main>
         
-        <h1>TODO NEXTJS + TYPESCRIPT</h1>
+        <h1 className="text-4xl text-black">TODO NEXTJS + TYPESCRIPT</h1>
         <br/><br/>
         <Navbar />
         <Apptodo />
