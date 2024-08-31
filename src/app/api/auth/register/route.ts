@@ -1,7 +1,7 @@
-import { connect } from "src/utills/db";
-import User from "src/models/usermodel";
-import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from 'bcryptjs';
+import User from "src/models/usermodel";
+import { connect } from "src/utills/db";
+import { NextRequest, NextResponse } from "next/server";
 
 // Connect to the database
 connect();
@@ -9,20 +9,16 @@ connect();
 export async function POST(request: NextRequest) {
   try {
     // Parse the request body
-    const requestBody = await request.json();
-    const { username, email, password, todos } = requestBody;
+    const { username, email, password } = await request.json();
 
     // Log the incoming request body for debugging
-    console.log("Request Body:", requestBody);
+    console.log("Request Body:", { username, email, password });
 
     // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
-        {
-          message: "User already exists",
-          success: false,
-        },
+        { message: "User already exists", success: false },
         { status: 400 }
       );
     }
@@ -35,8 +31,7 @@ export async function POST(request: NextRequest) {
     const newUser = new User({
       username,
       email,
-      password: hashedPassword,
-      todos,
+      password: hashedPassword
     });
 
     // Save the user to the database
@@ -44,23 +39,16 @@ export async function POST(request: NextRequest) {
 
     // Return success response
     return NextResponse.json(
-      {
-        message: "Account created successfully",
-        success: true,
-        payload: savedUser,
-      },
+      { message: "Account created successfully", success: true, payload: savedUser },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error) {
     // Log the error for debugging
     console.error("Error:", error);
 
     // Return error response
     return NextResponse.json(
-      {
-        error: error.message,
-        success: false,
-      },
+      { error: error.message, success: false },
       { status: 500 }
     );
   }
