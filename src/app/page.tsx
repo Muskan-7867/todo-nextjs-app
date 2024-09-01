@@ -1,20 +1,21 @@
-import React, { FC } from "react";
-import Navbar from "../components/Navbar";
-import Apptodo from "src/components/apptodo";
-import Todos from "src/components/todos";
 
-const Home:FC = () => {
+
+import React, { FC } from "react";
+
+import Navbar from "src/components/Navbar"; 
+import Apptodo from "src/components/apptodo"; 
+import Todos from "src/components/todos"; 
+const Home: FC = () => {
   return (
-    <div>
-      
-      <main>
-        
-        <h1 className="text-4xl text-black">TODO NEXTJS + TYPESCRIPT</h1>
-        <br/><br/>
-        <Navbar />
-        <Apptodo />
-        <Todos />
-        {/* Additional content */}
+    <div className=" min-h-screen"> 
+     
+      <main className="p-4 mt-8">
+        <h1 className="text-4xl font-bold text-center text-black my-6">
+          TODO NEXTJS + TYPESCRIPT
+        </h1>
+        <Navbar /> 
+        <Apptodo /> 
+        <Todos /> 
       </main>
     </div>
   );
