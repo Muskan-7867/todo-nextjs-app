@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { TodosProvider } from "src/store/todos";
 import './globals.css'
+import Navbar from "src/components/Navbarmain"; 
+
+
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,6 +24,8 @@ export default function RootLayout({
   return (
     <html lang="en">
     <body className={inter.className} >
+      <Navbar />
+     
         <TodosProvider>
         
         {children}
