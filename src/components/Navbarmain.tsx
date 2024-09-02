@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
           {/* Show buttons on large screens */}
           <div className="hidden lg:flex lg:items-center lg:space-x-4">
             <Link href="/login">
-              <button className="bg-white text-blue-600 text-xl px-4 py-2 rounded-full hover:bg-gray-100 transition-colors duration-200">
+              <button className="bg-white text-blue-600  text-xl px-4 py-2 rounded-full hover:bg-gray-100  ">
                 Login
               </button>
             </Link>
