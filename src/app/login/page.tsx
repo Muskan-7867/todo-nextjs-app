@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import Cookies from "js-cookie"; 
 
 export default function Login() {
   const [user, setUser] = useState({
@@ -22,22 +23,28 @@ export default function Login() {
     if (user.email && user.password) {
       setIsLoading(true);
       setMessage("");
-  
+
       try {
-        const response = await fetch('/api/auth/login', {
-          method: 'POST',
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(user),
         });
-  
+
         const data = await response.json();
-  
+
         if (response.ok) {
           setMessage("Login successful!");
-          console.log("Token:", data.token); 
-          localStorage.setItem('authToken', data.token); 
+          console.log("Token:", data.token);
+
+         
+          Cookies.set("authToken", data.token, {
+            expires: 7, 
+            secure: true, 
+            sameSite: "Strict", 
+          });
         } else {
           setMessage(data.error || "Login failed. Please try again.");
         }
@@ -50,7 +57,6 @@ export default function Login() {
       setMessage("Please enter both email and password.");
     }
   };
-  
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-800">
@@ -89,13 +95,9 @@ export default function Login() {
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
           disabled={isLoading}
         >
-          {isLoading ? 'Logging in...' : 'Login'}
+          {isLoading ? "Logging in..." : "Login"}
         </button>
-        {message && (
-          <p className="mt-4 text-center text-gray-600 text-sm">
-            {message}
-          </p>
-        )}
+        {message && <p className="mt-4 text-center text-gray-600 text-sm">{message}</p>}
         <p className="mt-4 text-center text-gray-600 text-sm">
           Don't have an account?{" "}
           <Link href="/register" className="text-blue-600 hover:underline">
