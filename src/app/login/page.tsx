@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import Cookies from "js-cookie"; 
+import Cookies from "js-cookie";
 
 export default function Login() {
   const [user, setUser] = useState({
@@ -23,7 +23,7 @@ export default function Login() {
     if (user.email && user.password) {
       setIsLoading(true);
       setMessage("");
-
+  
       try {
         const response = await fetch("/api/auth/login", {
           method: "POST",
@@ -32,24 +32,33 @@ export default function Login() {
           },
           body: JSON.stringify(user),
         });
-
+  
         const data = await response.json();
-
-        if (response.ok) {
-          setMessage("Login successful!");
-          console.log("Token:", data.token);
-
-         
-          Cookies.set("authToken", data.token, {
-            expires: 7, 
-            secure: true, 
-            sameSite: "Strict", 
-          });
-        } else {
+  
+        if (!response.ok) {
           setMessage(data.error || "Login failed. Please try again.");
+          return;
         }
+  
+        // Correctly set isVerified from backend response
+        const { token, isVerified } = data;
+  
+        if (!isVerified) {
+          setMessage("Your email is not verified.");
+          Cookies.remove("authToken"); // Clear the token if not verified
+          return;
+        }
+  
+        setMessage("Login successful!");
+        Cookies.set("authToken", token, {
+          expires: 7,
+          secure: true,
+          sameSite: "Strict",
+        });
+  
       } catch (error) {
         setMessage("An error occurred. Please try again.");
+        console.error("Login error:", error);
       } finally {
         setIsLoading(false);
       }
@@ -57,6 +66,7 @@ export default function Login() {
       setMessage("Please enter both email and password.");
     }
   };
+  
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-800">
