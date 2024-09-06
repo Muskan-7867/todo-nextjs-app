@@ -2,14 +2,12 @@
 import jwt from 'jsonwebtoken';
 import { NextRequest, NextResponse } from 'next/server';
 
-const jwtSecret = "mySecret"; // Make sure this matches the secret used to sign the token
+const jwtSecret = "mySecret";
 
 export async function POST(request: NextRequest) {
   try {
-    // Extract the token from the request body
     const { token } = await request.json();
 
-    // Check if the token exists
     if (!token) {
       return NextResponse.json(
         { error: 'Token missing' },
@@ -17,15 +15,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Verify the token
-    const decoded = jwt.verify(token, jwtSecret);
-
-    // Extract verification status and email from the decoded token
-    const { isVerified, email } = decoded as { isVerified: boolean; email: string };
+    // Decode the token and check verification status
+    const decoded = jwt.verify(token, jwtSecret) as { isVerified: boolean; email: string };
 
     // Respond with authentication status and user details
     return NextResponse.json(
-      { isAuthenticated: true, isVerified, email },
+      { isAuthenticated: true, isVerified: decoded.isVerified, email: decoded.email },
       { status: 200 }
     );
   } catch (error) {
