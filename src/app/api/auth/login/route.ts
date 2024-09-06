@@ -5,15 +5,14 @@ import { connect } from 'src/utills/db';
 import { NextRequest, NextResponse } from 'next/server';
 
 connect();
-const jwtsecret = "mySecret"
-
+const jwtSecret =  "mySecret"; 
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();
 
     if (!email || !password) {
       return NextResponse.json(
-        { error: "Email and password are required" },
+        { error: "Invalid credentials" },
         { status: 400 }
       );
     }
@@ -22,7 +21,7 @@ export async function POST(request: NextRequest) {
 
     if (!user) {
       return NextResponse.json(
-        { error: "Invalid email or password" },
+        { error: "Invalid credentials" },
         { status: 401 }
       );
     }
@@ -31,21 +30,19 @@ export async function POST(request: NextRequest) {
 
     if (!isMatch) {
       return NextResponse.json(
-        { error: "Invalid email or password" },
+        { error: "Invalid credentials" },
         { status: 401 }
       );
     }
 
-
-  
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      jwtsecret,
-      { expiresIn: '7d' } 
+      { userId: user._id, email: user.email, password: user.password },
+      jwtSecret,
+      { expiresIn: '7d' }
     );
 
     return NextResponse.json(
-      {token, message: "Login successful" },
+      { token, message: "Login successful" },
       { status: 200 }
     );
   } catch (error) {
