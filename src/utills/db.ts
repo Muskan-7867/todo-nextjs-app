@@ -2,7 +2,7 @@
 import mongoose from 'mongoose';
 
 // const mongoUrl: string = process.env.mongodb_url!;
-const mongoUrl: string = "mongodb://localhost:27017/todo-app"
+const mongoUrl: string = "mongodb+srv://muskanloach984:jyDbdxTdwTFWg40E@todo-db.rw123.mongodb.net/?retryWrites=true&w=majority&appName=todo-db"
 
 if (!mongoUrl) {
   throw new Error('Please define the MONGODB_URL environment variable inside .env.local');
