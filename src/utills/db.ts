@@ -1,4 +1,4 @@
-// lib/mongodb.ts
+
 import mongoose from "mongoose";
 
 
@@ -28,7 +28,7 @@ export async function connect(): Promise<void> {
       .then(() => console.log("MongoDB connected"))
       .catch((err) => {
         console.error("MongoDB connection error:", err);
-        setTimeout(connectWithRetry, 5000); // Retry after 5 seconds
+        setTimeout(connectWithRetry, 5000); 
       });
   };
 
