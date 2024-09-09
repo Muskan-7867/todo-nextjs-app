@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
 export default function Register() {
-  const router = useRouter(); 
+  const router = useRouter();
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -26,10 +27,10 @@ export default function Register() {
       setMessage("");
 
       try {
-        const response = await fetch('/api/auth/register', {
-          method: 'POST',
+        const response = await fetch("/api/auth/register", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(user),
         });
@@ -37,9 +38,8 @@ export default function Register() {
         const data = await response.json();
 
         if (response.ok) {
-          setMessage("Registration successful! You can now log in."),
-          router.push("/login")
-                                                                                                                                               
+          setMessage("Registration successful! You can now log in.");
+          router.push("/login");
         } else {
           setMessage(data.error || "Registration failed. Please try again.");
         }
@@ -54,69 +54,93 @@ export default function Register() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-800">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">Register</h1>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2" htmlFor="username">
-            Username
-          </label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            placeholder="Enter your username"
-            value={user.username}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2" htmlFor="email">
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Enter your email"
-            value={user.email}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-          />
-        </div>
-        <div className="mb-6">
-          <label className="block text-gray-700 font-medium mb-2" htmlFor="password">
-            Password
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Enter your password"
-            value={user.password}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-          />
-        </div>
-        <button
-          onClick={handleRegister}
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200"
-          disabled={isLoading}
-        >
-          {isLoading ? 'Registering...' : 'Register'}
-        </button>
-        {message && (
-          <p className="mt-4 text-center text-gray-600 text-sm">
-            {message}
+    <div className="flex justify-center md:justify-start items-center h-screen bg-gray-50 px-4">
+      {/* Main Container */}
+      <div className="flex flex-col md:flex-row items-center w-full md:ml-[15%]">
+        {/* Registration Form Container */}
+        <div className="bg-white p-10 m-6 rounded-lg shadow-lg w-full md:max-w-lg lg:max-w-xl">
+          <h1 className="text-5xl md:text-4xl font-bold text-gray-800 mb-6 text-center md:text-center">
+            Register
+          </h1>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-[2em] md:text-[1.5em] font-medium mb-2"
+              htmlFor="username"
+            >
+              Username
+            </label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              placeholder="Enter your username"
+              value={user.username}
+              onChange={handleChange}
+              className="w-full p-4 border text-[2em] md:text-[1.5em] border-gray-300 rounded focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-[2em] md:text-[1.5em] font-medium mb-2"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Enter your email"
+              value={user.email}
+              onChange={handleChange}
+              className="w-full p-4 border text-[2em] md:text-[1.5em] border-gray-300 rounded focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              className="block text-gray-700 text-2xl md:text-xl font-medium mb-2"
+              htmlFor="password"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              value={user.password}
+              onChange={handleChange}
+              className="w-full p-4 border  text-[2em] md:text-[1.5em] border-gray-300 rounded focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <button
+            onClick={handleRegister}
+            className={`w-full bg-blue-500 text-[2em] md:text-[1.5em] text-white py-4 rounded hover:bg-blue-600 transition duration-200 ${
+              isLoading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={isLoading}
+          >
+            {isLoading ? "Registering..." : "Register"}
+          </button>
+          {message && (
+            <p className="mt-4 text-center text-green-500 text-lg">{message}</p>
+          )}
+          <p className="mt-6 text-center text-[2em] md:text-[1.5em] text-gray-600">
+            Already have an account?{" "}
+            <Link href="/login" className="text-blue-600 hover:underline">
+              Login
+            </Link>
           </p>
-        )}
-        <p className="mt-4 text-center text-gray-600 text-sm">
-          Already have an account?{" "}
-          <Link href="/login" className="text-blue-500 hover:underline">
-            Login
-          </Link>
-        </p>
+        </div>
+
+        {/* SVG Image Container */}
+        <div className="hidden md:flex justify-center items-center md:ml-[10%] lg:ml-[20%]">
+          <img
+            src="/signup.svg"
+            alt="Register illustration"
+            className="w-[350px] h-[350px] lg:w-[450px] lg:h-[450px]"
+          />
+        </div>
       </div>
     </div>
   );
