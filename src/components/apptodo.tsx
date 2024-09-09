@@ -4,15 +4,11 @@ import { useState } from "react";
 
 type TodoForm = {
   task: string;
-  status: string;
-  targetTime: string;
 };
 
 const AddTodo = () => {
   const [form, setForm] = useState<TodoForm>({
     task: "",
-    status: "",
-    targetTime: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -35,7 +31,7 @@ const AddTodo = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form || null }),
       });
 
       const data = await response.json();
@@ -45,7 +41,7 @@ const AddTodo = () => {
       }
 
       setSuccessMessage("Todo created successfully!");
-      setForm({ task: "", status: "pending", targetTime: "" });
+      setForm({ task: "" });
     } catch (error: any) {
       setError(error.message || "Something went wrong.");
     } finally {
@@ -54,10 +50,9 @@ const AddTodo = () => {
   };
 
   return (
-    <div className="add-todo-container">
-      <form onSubmit={handleSubmit} className="todo-form">
-        <div className="form-group">
-          <label htmlFor="task">Task:</label>
+    <div className="w-full max-w-4xl mx-auto p-8 rounded-lg">
+      <form onSubmit={handleSubmit} className="flex items-center space-x-4">
+        <div className="flex-grow">
           <input
             type="text"
             id="task"
@@ -66,41 +61,34 @@ const AddTodo = () => {
             onChange={handleChange}
             required
             placeholder="Enter your task"
+            className="border border-gray-400 rounded-sm w-[42rem] my-16 p-2 px-4 text-xl tracking-wide font-bold transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="status">Status:</label>
-          <input
-            type="text"
-            id="status"
-            name="status"
-            value={form.status}
-            onChange={handleChange}
-            required
-            placeholder="Enter status (e.g., pending, completed)"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="targetTime">Target Time:</label>
-          <input
-            type="datetime-local"
-            id="targetTime"
-            name="targetTime"
-            value={form.targetTime}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <button type="submit" disabled={loading}>
+        <button
+          type="submit"
+          disabled={loading}
+          className={`p-2.5 px-7 border-0 rounded-sm font-bold cursor-pointer ml-6 bg-green-600 text-white transform transition duration-300 ${
+            loading
+              ? "bg-blue-400 cursor-not-allowed"
+              : "bg-green-600 hover:bg-green-700 hover:scale-105 active:scale-95"
+          }`}
+        >
           {loading ? "Creating..." : "Add Todo"}
         </button>
       </form>
 
-      {error && <p className="error">{error}</p>}
-      {successMessage && <p className="success">{successMessage}</p>}
+      {error && (
+        <p className="mt-6 text-red-500 font-medium animate-fade-in">
+          {error}
+        </p>
+      )}
+      {successMessage && (
+        <p className="mt-6 text-green-500 text-center text-2xl animate-fade-in">
+          {successMessage}
+        </p>
+      )}
+      <hr className="my-6 border-black" />
     </div>
   );
 };
