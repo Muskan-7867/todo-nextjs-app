@@ -1,26 +1,19 @@
-
-
 import { NextRequest, NextResponse } from "next/server";
 import Todo from "src/models/todomodel";
 import { connect } from "src/utills/db";
 
+// Establish a database connection
+connect();
 
-connect()
-
-export async function POST(request: NextRequest, ) {
-
-  console.log("inside  api");
-  
+export async function POST(request: NextRequest) {
   try {
-    // Parse the request body
     const reqBody = await request.json();
-    const { task, status,  targetTime} = reqBody;
-    console.log("inside  try", task);
+    const { task, targetTime = null, status = 'pending' } = reqBody; 
 
     // Basic validation
-    if (!task || !status || !targetTime ) {
+    if (!task) {
       return NextResponse.json(
-        { error: "Missing required fields", success: false },
+        { error: 'Missing required fields', success: false },
         { status: 400 }
       );
     }
@@ -29,9 +22,7 @@ export async function POST(request: NextRequest, ) {
     const newTodo = new Todo({
       task,
       status,
-     // Ensure the field name matches your model
-      // createdAt: new Date(createdAt), // it will auomatically filled   by function Date.now  on model file
-      targetTime: new Date(targetTime), // Convert to Date if needed
+      targetTime, // This will be null if not provided
     });
 
     // Save the Todo to the database
@@ -40,22 +31,21 @@ export async function POST(request: NextRequest, ) {
     // Return a success response
     return NextResponse.json(
       {
-        message: "Todo created successfully",
+        message: 'Todo created successfully',
         success: true,
         payload: savedTodo,
       },
       { status: 200 }
-    
     );
-  } catch (error) {
+  } catch (error: any) {
     // Return an error response
-    console.error("Error creating Todo:", error);
     return NextResponse.json(
       {
-        error: error.message || "Internal server error",
+        error: error.message || 'Internal server error',
         success: false,
       },
-      { status: 500 }
-    );
-  }
+      { status: 500 }
+    );
+  }
 }
+
