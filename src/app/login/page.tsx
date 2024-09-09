@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export default function Login() {
   const router = useRouter();
@@ -67,17 +68,27 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center md:justify-start  items-center h-screen bg-gray-50 px-4">
+    <div className="flex justify-center md:justify-start items-center h-screen bg-gray-50 px-4">
       {/* Main Container */}
-      <div className="flex flex-col md:flex-row items-center w-full md:ml-[15%]">
+      <motion.div
+        className="flex flex-col md:flex-row items-center w-full md:ml-[15%]"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
+      >
         {/* Login Form Container */}
-        <div className="p-8 m-6 rounded-lg shadow-lg bg-white w-full md:max-w-lg lg:max-w-xl">
+        <motion.div
+          className="p-8 m-6 rounded-lg shadow-lg bg-white w-full md:max-w-lg lg:max-w-xl"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <h1 className="text-5xl md:text-4xl font-bold text-gray-800 mb-6 text-center md:text-center">
             Login
           </h1>
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-[2em] md:text-[1.5em] font-medium mb-2 "
+              className="block text-gray-700 text-[2em] md:text-[1.5em] font-medium mb-2"
               htmlFor="email"
             >
               Email
@@ -89,7 +100,7 @@ export default function Login() {
               placeholder="Enter your email"
               value={user.email}
               onChange={handleChange}
-              className="w-full p-4 border  text-[2em] md:text-[1.5em] border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              className="w-full p-4 border text-[2em] md:text-[1.5em] border-gray-300 rounded focus:outline-none focus:border-blue-500"
             />
           </div>
           <div className="mb-6">
@@ -125,22 +136,27 @@ export default function Login() {
             Don't have an account?{" "}
             <Link
               href="/register"
-              className="text-blue-600   hover:underline"
+              className="text-blue-600 hover:underline"
             >
               Register
             </Link>
           </p>
-        </div>
+        </motion.div>
 
         {/* SVG Image Container */}
-        <div className="hidden md:flex justify-center items-center md:ml-[10%] lg:ml-[15%]">
+        <motion.div
+          className="hidden md:flex justify-center items-center md:ml-[10%] lg:ml-[15%]"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <img
             src="/login.svg"
             alt="Login illustration"
             className="w-[350px] h-[350px] lg:w-[450px] lg:h-[450px]"
           />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
