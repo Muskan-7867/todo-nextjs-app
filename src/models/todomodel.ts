@@ -41,8 +41,6 @@ const TodoSchema: MongooseSchema = new MongooseSchema(
   }
 );
 
-// Create and export the Mongoose model
-// const Todo = mongoose.model<ITodo>('Todo', TodoSchema);
 const Todo = mongoose.models.Todo || mongoose.model<ITodo>('Todo', TodoSchema);
 
 
