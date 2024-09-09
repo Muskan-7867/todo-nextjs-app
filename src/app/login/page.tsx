@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
-  const router = useRouter()
+  const router = useRouter();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -25,7 +25,7 @@ export default function Login() {
     if (user.email && user.password) {
       setIsLoading(true);
       setMessage("");
-  
+
       try {
         const response = await fetch("/api/auth/login", {
           method: "POST",
@@ -34,29 +34,27 @@ export default function Login() {
           },
           body: JSON.stringify(user),
         });
-  
+
         const data = await response.json();
-  
+
         if (!response.ok) {
           setMessage(data.error || "Login failed. Please try again.");
           return;
         }
-  
-    
+
         const { token } = data;
-  
+
         if (!token) {
           setMessage("Your email is not verified.");
-          Cookies.remove("authToken"); 
+          Cookies.remove("authToken");
           return;
         }
-  
+
         setMessage("Login successful!");
         Cookies.set("authToken", token, {
-          expires: 7
+          expires: 7,
         });
-        router.push('/')
-  
+        router.push("/");
       } catch (error) {
         setMessage("An error occurred. Please try again.");
         console.error("Login error:", error);
@@ -67,54 +65,81 @@ export default function Login() {
       setMessage("Please enter both email and password.");
     }
   };
-  
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-800"> 
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">Login</h1>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-1" htmlFor="email">
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Enter your email"
-            value={user.email}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+    <div className="flex justify-center md:justify-start  items-center h-screen bg-gray-50 px-4">
+      {/* Main Container */}
+      <div className="flex flex-col md:flex-row items-center w-full md:ml-[15%]">
+        {/* Login Form Container */}
+        <div className="p-8 m-6 rounded-lg shadow-lg bg-white w-full md:max-w-lg lg:max-w-xl">
+          <h1 className="text-5xl md:text-4xl font-bold text-gray-800 mb-6 text-center md:text-center">
+            Login
+          </h1>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-[2em] md:text-[1.5em] font-medium mb-2 "
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Enter your email"
+              value={user.email}
+              onChange={handleChange}
+              className="w-full p-4 border  text-[2em] md:text-[1.5em] border-gray-300 rounded focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              className="block text-gray-700 text-[2em] md:text-[1.5em] text-xl font-medium mb-2"
+              htmlFor="password"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              value={user.password}
+              onChange={handleChange}
+              className="w-full p-4 border text-[2em] md:text-[1.5em] border-gray-300 rounded focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <button
+            onClick={handleLogin}
+            className={`w-full bg-blue-600 text-white py-3 text-[2em] md:text-[1.5em] rounded hover:bg-blue-700 transition duration-200 ${
+              isLoading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={isLoading}
+          >
+            {isLoading ? "Logging in..." : "Login"}
+          </button>
+          {message && (
+            <p className="mt-4 text-center text-green-500 text-sm">{message}</p>
+          )}
+          <p className="mt-6 text-center text-gray-600 text-[2em] md:text-[1.5em]">
+            Don't have an account?{" "}
+            <Link
+              href="/register"
+              className="text-blue-600   hover:underline"
+            >
+              Register
+            </Link>
+          </p>
+        </div>
+
+        {/* SVG Image Container */}
+        <div className="hidden md:flex justify-center items-center md:ml-[10%] lg:ml-[15%]">
+          <img
+            src="/login.svg"
+            alt="Login illustration"
+            className="w-[350px] h-[350px] lg:w-[450px] lg:h-[450px]"
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-1" htmlFor="password">
-            Password
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Enter your password"
-            value={user.password}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-          />
-        </div>
-        <button
-          onClick={handleLogin}
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
-          disabled={isLoading}
-        >
-          {isLoading ? "Logging in..." : "Login"}
-        </button>
-        {message && <p className="mt-4 text-center text-gray-600 text-sm">{message}</p>}
-        <p className="mt-4 text-center text-gray-600 text-sm">
-          Don't have an account?{" "}
-          <Link href="/register" className="text-blue-600 hover:underline">
-            Register
-          </Link>
-        </p>
       </div>
     </div>
   );
