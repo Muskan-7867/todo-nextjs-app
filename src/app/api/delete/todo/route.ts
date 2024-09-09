@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from "next/server";
 import Todo from "src/models/todomodel";
 import { connect } from "src/utills/db";
@@ -7,9 +6,10 @@ connect();
 
 export async function DELETE(request: NextRequest) {
   try {
+    // Parse the JSON body to get the ID
     const { id } = await request.json();
+    console.log("id of todo",id);
 
-    // Ensure the ID is provided
     if (!id) {
       return NextResponse.json(
         { message: "ID is required", success: false },
@@ -20,7 +20,6 @@ export async function DELETE(request: NextRequest) {
     // Find and delete the Todo by ID
     const deletedTodo = await Todo.findByIdAndDelete(id);
 
-    // If no Todo is found, return a 404 error
     if (!deletedTodo) {
       return NextResponse.json(
         { message: "Todo not found", success: false },
@@ -28,7 +27,6 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Return a success response
     return NextResponse.json(
       { message: "Todo deleted successfully", success: true },
       { status: 200 }
