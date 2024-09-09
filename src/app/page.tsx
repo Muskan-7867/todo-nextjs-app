@@ -12,9 +12,10 @@ const Home: React.FC = () => {
         <h1 className="text-4xl font-bold text-center text-black my-6">
           TODO NEXTJS + TYPESCRIPT
         </h1>
-        {/* <Navbar /> */}
+       
         <Apptodo />
         <TodoList />
+        
       </main>
     </div>
   );
