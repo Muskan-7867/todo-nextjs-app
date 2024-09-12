@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+<<<<<<< HEAD
 import { TrashIcon, PencilIcon } from "@heroicons/react/24/outline"; 
+=======
+import { TrashIcon, PencilIcon } from "@heroicons/react/24/outline"; // Importing PencilIcon for editing
+>>>>>>> master
 import { useSearchParams } from "next/navigation";
 
 type Todo = {
@@ -43,7 +47,11 @@ const Todos = () => {
     fetchTodos();
   }, []);
 
+<<<<<<< HEAD
 
+=======
+  // Filter todos based on the status from query params
+>>>>>>> master
   const filteredTodos = todos.filter((todo) => {
     if (filterStatus === "active") {
       return todo.status === "pending";
@@ -51,7 +59,11 @@ const Todos = () => {
     if (filterStatus === "completed") {
       return todo.status === "completed";
     }
+<<<<<<< HEAD
     return true; 
+=======
+    return true; // For 'All' case or when no filter is applied
+>>>>>>> master
   });
 
   const handleDelete = async (id: string) => {
@@ -140,7 +152,11 @@ const Todos = () => {
         {filteredTodos.map((todo, index) => (
           <li
             key={todo._id}
+<<<<<<< HEAD
             className={`flex items-center space-x-4 space-y-2 mx-12 border-b text-2xl border-black pb-4 transition-all duration-300 transform ${
+=======
+            className={`flex items-center space-x-4 border-b text-2xl border-black pb-4 transition-all duration-300 transform ${
+>>>>>>> master
               index !== todos.length - 1 ? "mb-4" : ""
             } ${todo.status === "completed" ? "opacity-50" : "opacity-100"}`}
           >
@@ -148,8 +164,13 @@ const Todos = () => {
               type="checkbox"
               checked={todo.status === "completed"}
               onChange={(e) => handleStatusChange(todo._id, e.target.checked)}
+<<<<<<< HEAD
               className="mr-4 mt-2 transform transition duration-200 hover:scale-110"
               aria-label="Toggle status "
+=======
+              className="mr-4 transform transition duration-200 hover:scale-110"
+              aria-label="Toggle status"
+>>>>>>> master
             />
             {editingId === todo._id ? (
               <input
@@ -161,12 +182,20 @@ const Todos = () => {
                   if (e.key === "Enter") handleEditComplete(todo._id);
                 }}
                 autoFocus
+<<<<<<< HEAD
                 className="w-full p-4 rounded-lg focus:outline-none focus:ring-2 transition transform duration-200 hover:scale-105"
+=======
+                className="w-full p-4 rounded-lg focus:outline-none focus:ring-2  transition transform duration-200 hover:scale-105"
+>>>>>>> master
               />
             ) : (
               <span
                 className={`flex-grow ${
+<<<<<<< HEAD
                   todo.status === "completed" ? "line-through" : ""
+=======
+                  todo.status === "completed" ? "line-through " : ""
+>>>>>>> master
                 }`}
               >
                 {todo.task}
@@ -178,7 +207,11 @@ const Todos = () => {
                 className="p-2 rounded hover:bg-blue-100 transition duration-300 transform hover:scale-110"
                 aria-label="Edit todo"
               >
+<<<<<<< HEAD
                 <PencilIcon className="h-6 w-6 text-blue-500 hover:text-blue-700" />
+=======
+                <PencilIcon className="h-6 w-6 text-green-500 hover:text-green-700" />
+>>>>>>> master
               </button>
               <button
                 onClick={() => handleDelete(todo._id)}
