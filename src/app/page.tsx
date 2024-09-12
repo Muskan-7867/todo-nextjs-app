@@ -1,19 +1,19 @@
 "use client";
 import React from "react";
 
-import Apptodo from "src/components/apptodo";
-import TodoList from "src/components/todos";
+import Addtodo from "src/components/Addtodo";
+import Navbar from "src/components/Navbar";
+
+import TodoList from "src/components/Todos";
+
 
 
 const Home: React.FC = () => {
   return (
-    <div className="min-h-screen">
-      <main className="p-4 mt-8">
-        <h1 className="text-4xl font-bold text-center text-black my-6">
-          TODO NEXTJS + TYPESCRIPT
-        </h1>
-       
-        <Apptodo />
+    <div className="min-h-screen bg-gray-50">
+      <main className="p-4 mt-8 text-black">
+       <Navbar />
+        <Addtodo />
         <TodoList />
         
       </main>
