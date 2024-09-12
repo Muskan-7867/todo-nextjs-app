@@ -16,7 +16,7 @@ const Navbarmain: React.FC = () => {
   }, []);
 
   return (
-    <nav className="bg-black p-4 w-full">
+    <nav className="bg-sky-900 p-4 w-full">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="text-white text-4xl font-bold">
