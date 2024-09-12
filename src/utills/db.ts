@@ -1,7 +1,4 @@
-
 import mongoose from "mongoose";
-
-
 
 const mongoUrl: string =
   "mongodb+srv://muskanloach984:jyDbdxTdwTFWg40E@todo-db.rw123.mongodb.net/?retryWrites=true&w=majority&appName=todo-db";
@@ -28,7 +25,7 @@ export async function connect(): Promise<void> {
       .then(() => console.log("MongoDB connected"))
       .catch((err) => {
         console.error("MongoDB connection error:", err);
-        setTimeout(connectWithRetry, 5000); 
+        setTimeout(connectWithRetry, 5000);
       });
   };
 
