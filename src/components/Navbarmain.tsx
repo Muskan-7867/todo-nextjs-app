@@ -1,22 +1,16 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-<<<<<<< HEAD
+
 import Cookies from 'js-cookie'; 
-=======
-import Cookies from 'js-cookie'; // Import Cookies for authentication token check
->>>>>>> master
+
 import { UserPlus, Lock } from 'lucide-react';
 
 const Navbarmain: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-<<<<<<< HEAD
-   
-=======
-    // Check if the user is authenticated by looking for the auth token
->>>>>>> master
+
     const token = Cookies.get("authToken");
     if (token) {
       setIsAuthenticated(true);
@@ -33,7 +27,6 @@ const Navbarmain: React.FC = () => {
 
         {/* Navigation Links */}
         <div className="flex items-center space-x-4 lg:space-x-8">
-<<<<<<< HEAD
      
           <div className="flex items-center space-x-4 lg:hidden">
             {!isAuthenticated && (
@@ -46,7 +39,7 @@ const Navbarmain: React.FC = () => {
             </Link>
           </div>
 
-=======
+
           {/* Mobile View: Show login icon only if not authenticated, register icon always */}
           <div className="flex items-center space-x-4 lg:hidden">
             {!isAuthenticated && (
@@ -60,7 +53,7 @@ const Navbarmain: React.FC = () => {
           </div>
 
           {/* Desktop View: Show login button only if not authenticated, register button always */}
->>>>>>> master
+
           <div className="hidden lg:flex lg:items-center lg:space-x-4">
             {!isAuthenticated && (
               <Link href="/login">
