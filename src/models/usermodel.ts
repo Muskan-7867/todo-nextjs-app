@@ -37,10 +37,8 @@ const UserSchema: MongooseSchema = new MongooseSchema(
         
       }
     ]
-  },
-  {
-    timestamps: true
   }
+  
 );
 
 
