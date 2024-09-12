@@ -12,7 +12,7 @@ const Navbar = () => {
       <Link href="/" className={`block md:inline ${!todosData ? 'font-bold' : ''} py-2 md:py-0`}>
         All
       </Link>
-      <Link href="/?todos=active" className={`block md:inline ${todosData === 'active' ? 'font-bold' : ''} py-2 md:py-0`}>
+      <Link href="/?todos=active" className={`block  md:inline ${todosData === 'active' ? 'font-bold' : ''} py-2 md:py-0`}>
         Active
       </Link>
       <Link href="/?todos=completed" className={`block md:inline ${todosData === 'completed' ? 'font-bold' : ''} py-2 md:py-0`}>
